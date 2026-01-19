@@ -5,7 +5,8 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/ui',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    // 'nuxt-charts'
   ],
   css: ['~/assets/css/main.css'],
 

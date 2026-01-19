@@ -1,7 +1,7 @@
 <template>
     <UMain class="ProjectMain">
         <Sidebar/>
-        <section class="p-[20px]">
+        <section class="ProjectContainer p-[20px] w-full">
             <slot/>
         </section>
     </UMain>
