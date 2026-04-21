@@ -56,7 +56,7 @@
 
     const logout = async () => {
         loading.value = true;
-        await userStore.logout();
+        await userStore.resetUser();
         loading.value = false;
         router.push('/login');
     }

@@ -8,4 +8,7 @@
 definePageMeta({
     middleware: ['mainpage']
 })
+onMounted(() => {
+    
+})
 </script>

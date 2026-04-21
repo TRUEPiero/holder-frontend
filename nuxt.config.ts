@@ -9,9 +9,26 @@ export default defineNuxtConfig({
     // 'nuxt-charts'
   ],
   css: ['~/assets/css/main.css'],
-
   alias: {
     '@shared': './components/shared',
     '@widgets': './components/widgets',
+  },
+  nitro: {
+    preset: 'bun',
+    node: true,
+    inlineDynamicImports: true,
+    serveStatic: 'inline',
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+    },
+  },
+    vite: {
+    server: {
+      watch: {
+        usePolling: true,
+      },
+    },
   },
 })

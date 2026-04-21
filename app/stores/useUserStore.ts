@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 
-type AythFormData = {
-    login: string,
-    password: string,
-    remember: boolean
+type state = {
+    _role: any,
+    _user: string | null,
+    _authorized: boolean,
 }
 
 export const useUserStore = defineStore('user', {
-    state: () => ({
+    state: ():state => ({
         _role: null,
         _user: null,
         _authorized: false,
@@ -20,42 +20,18 @@ export const useUserStore = defineStore('user', {
     },
 
     actions: {
-        async getCurrentUser(): Promise<void> {
-            const { data, error } = await api.user.get();
-
-            if (!error) {
-                this._user = data;
-                this._role = data.role;
-                this._authorized = true
-            }
-        },
-
-        async auth(body: AythFormData): Promise<any> {
-
-            const { data, error } = await api.auth.login.post({ ...body })
-
-            if (error) {
-                return false
-            }
-
+        setUser(data: any) {
             this._user = data;
-            this._role = data.role;
-            this._authorized = true
-
-            return true
+            this._authorized = true;
+            this.setRole(data.role);
+        }, 
+        setRole(role: string | null) {
+            this._role = role;
         },
-
-        async logout():Promise<void> {
-
-            const {data, error} = await api.auth.logout.post();
-
-            if(error) {
-                return
-            }
-
-            this._authorized = false;
+        resetUser() {
             this._user = null;
-            this._role = null;
+            this._authorized = false;
+            this.setRole(null);
         }
     }
 })

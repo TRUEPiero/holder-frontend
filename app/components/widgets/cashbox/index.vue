@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-    import CashboxTree from '~/components/features/CashboxTree/index.vue';
+    import CashboxTree from '~/components/features/CashboxTree/ui/index.vue';
     import Button from '~/components/shared/button/index.vue';
     import Input from '~/components/shared/input/index.vue';
 
@@ -45,7 +45,6 @@
     const modalCreateOpen = ref(false)
 
     const createCashbox = () => {
-        cashboxStore.createCashbox(state);
 
         modalCreateOpen.value = false;
     }

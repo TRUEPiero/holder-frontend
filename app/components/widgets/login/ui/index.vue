@@ -16,7 +16,7 @@
             </UFormField>
             <div class="flex flex-row w-full">
                 <UFormField label="Запомнить меня" name="remember">
-                    <UCheckbox v-model="remember"/>
+                    <UCheckbox v-model="state.remember"/>
                 </UFormField>
                 <Button :label="'Забыли пароль'" :variant="'link'" @click="forgotPass"/>
             </div>
@@ -31,6 +31,7 @@
     import Input from '~/components/shared/input/index.vue'
     import Button from '~/components/shared/button/index.vue'
     import { useUserStore } from '~/stores';
+    import { Auth } from '../api/Auth';
 
     const userStore = useUserStore();
     const router = useRouter();
@@ -40,12 +41,12 @@
         password: z.string('Password is required').min(8, 'Must be at least 8 characters')
     })
 
-    const remember = ref(false)
     const loading = ref(false)
 
     const state = reactive({
         login: '',
         password: '',
+        remember: false,
     })
 
     const forgotPass = () => {
@@ -54,13 +55,12 @@
 
     const onSubmit = async () => {
         loading.value = true;
-        await userStore.auth({
-            ...state,
-            remember: remember.value
-        });
+        const res = await Auth(state);
 
+        if(!res) return
+
+        userStore.setUser(res.data);
         loading.value = false;
-
-        router.push('/')
+        router.push('/project/list')
     }
 </script>
