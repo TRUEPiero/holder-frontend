@@ -5,8 +5,6 @@
     </UMain>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style src="~/assets/css/layouts/authorisation.scss"></style>

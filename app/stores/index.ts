@@ -1,3 +1,2 @@
-export {useUserStore} from './useUserStore';
-export {useProjectStore} from './useProjectStore';
-export {useCashboxStore} from './useCashboxStore'
+export {useUserStore} from './user';
+export {useProjectStore} from './project';

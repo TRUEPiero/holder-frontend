@@ -1,15 +1,12 @@
 <template>
     <UMain class="ProjectMain">
-        <Sidebar/>
+        <!-- <Sidebar/> -->
         <section class="ProjectContainer p-[20px] w-full">
             <slot/>
         </section>
     </UMain>
 </template>
 
-<script setup lang="ts">
-    import Sidebar from '~/components/widgets/sidebar/index.vue'
-
-</script>
+<script setup lang="ts"></script>
 
 <style src="~/assets/css/layouts/project.scss"></style>

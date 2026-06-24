@@ -1,7 +1,11 @@
 <template>
-    <ProjectTable />
+    <ProjectTable/>
 </template>
 
 <script setup lang="ts">
-    import ProjectTable from '../../components/widgets/project/ui/list.vue'
+    import ProjectTable from '~/components/widgets/project/table/ui/ProjectTable.vue';
+    import { useUserStore } from '~/stores';
+    
+    const userStore = useUserStore();
+
 </script>
