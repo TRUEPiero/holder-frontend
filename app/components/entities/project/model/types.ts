@@ -1,6 +1,7 @@
 type Project = {
     id: number,
     title: string
+    balance: string
 }
 
 type ProjectState = {

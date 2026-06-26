@@ -22,9 +22,9 @@
 
 <script lang="ts" setup>
     import * as z from 'zod'
-    import Button from '~/components/shared/button/index.vue'
-    import Input from '~/components/shared/input/index.vue'
-    import InputPassword from '~/components/shared/input/password/index.vue'
+    import Button from '~/components/shared/ui/button/index.vue'
+    import Input from '~/components/shared/ui/input/index.vue'
+    import InputPassword from '~/components/shared/ui/input/password/index.vue'
     import { AuthByEmail } from '~/components/entities/user/api/Login';
     import { useUserStore } from '~/stores';
 

@@ -1,0 +1,23 @@
+.CashboxList {
+    height: 100%;
+    display: flex;
+
+    &__body {
+        width: 100%;
+        padding-bottom: 74px;
+    }
+}
+.ActionBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.CashboxesBlock {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}

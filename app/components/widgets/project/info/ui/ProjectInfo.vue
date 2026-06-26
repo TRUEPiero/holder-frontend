@@ -1,36 +1,46 @@
 <template>
-    {{ projectData?.title }}
+    <div 
+        class="w-[50%]"
+    >
+        <Loader 
+            v-if="loading"
+            class="w-[250px]"
+        />
+        <p v-else>
+            {{ projectData?.title }}
+        </p>
+    </div>
 </template>
 
 <script setup lang="ts">
-    import { getById } from '~/components/entities/project/api/getById';
-    import { useProjectStore } from '~/stores';
+import Loader from '~/components/shared/ui/loader/index.vue';
+import { getById } from '~/components/entities/project/api/getById';
+import { useProjectStore } from '~/stores';
 
-    import type { Project } from '~/components/entities/project/model/types';
+import type { Project } from '~/components/entities/project/model/types';
 
-    const projectStore = useProjectStore();
-    const props = defineProps<{
-        projectId: number
-    }>()
-    
-    const projectId = props.projectId;
+const props = defineProps<{
+    projectId: number
+}>()
 
-    const projectData: Ref<Project | null> = ref(null);
-    const loading = ref(false);
+const projectStore = useProjectStore();
 
-    const getProject = async () => {
-        loading.value = true
+const projectData: Ref<Project | null> = ref(null);
+const loading = ref(false);
 
-        const result = await getById(projectId);
-        if(!result) return;
+const getProject = async () => {
+    loading.value = true
 
-        projectData.value = result.data;
-        projectStore.setProject(result.data);
+    const result = await getById(props.projectId);
+    if (!result) return;
 
-        loading.value = false
-    } 
+    projectData.value = result.data;
+    projectStore.setProject(result.data);
 
-    onMounted(async () => {
-        await getProject();
-    })
+    loading.value = false
+}
+
+onMounted(async () => {
+    await getProject();
+})
 </script>

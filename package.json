@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.0",
-    "@nuxt/ui": "^4.1.0",
+    "@nuxt/ui": "^4.9.0",
     "@nuxtjs/i18n": "^10.4.0",
     "@pinia/nuxt": "^0.11.2",
     "apexcharts": "^5.3.6",

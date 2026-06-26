@@ -1,10 +1,10 @@
 <template>
     <UHeader/>
-    <UMain class="AuthLayout">
+    <UMain class="">
         <slot/>
     </UMain>
 </template>
 
 <script setup lang="ts"></script>
 
-<style src="~/assets/css/layouts/authorisation.scss"></style>
+<style src="~/assets/css/layouts/without-sodebar.scss"></style>

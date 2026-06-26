@@ -1,0 +1,21 @@
+.Sidebar {
+    --sidebar-width-icon: 6rem;
+
+    &__header {
+        justify-content: space-between;
+    }
+
+    .closeIcon {
+        opacity: 0;
+    }
+
+    &[data-state="collapsed"] {
+        .closeIcon {
+            opacity: 1;
+        }
+    }
+
+    &:hover .closeIcon {
+        opacity: 1;
+    }
+}

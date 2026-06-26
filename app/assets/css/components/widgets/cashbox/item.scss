@@ -1,0 +1,24 @@
+.CashboxItem {
+    background-color: var(--ui-bg);
+    border-radius: calc(var(--ui-radius) * 2);
+    // padding: 24px;
+
+    &__card {
+        background: none;
+        box-shadow: none;
+        padding: 24px;
+        width: 100%;
+    }
+
+    &__detail {
+        padding: 0 24px 24px 24px;
+    }
+
+    & + .CashboxItem {
+        margin-top: 10px;
+    }
+    
+    .CashboxCard__root {
+        padding: 0;
+    }
+}
