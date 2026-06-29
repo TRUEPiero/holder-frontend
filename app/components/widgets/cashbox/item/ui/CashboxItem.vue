@@ -20,7 +20,10 @@
         </UCard>
 
         <template #content>
-            <Transfer />
+            <Transfer 
+                :project-id="projectId"
+                :cashbox="cashbox"
+            />
         </template>
     </UCollapsible>
 </template>

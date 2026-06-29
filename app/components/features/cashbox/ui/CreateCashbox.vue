@@ -6,11 +6,11 @@
         
         <template #content>
             <UFormField label="Title" required>
-                <UInput v-model="createData.title"/>
+                <Input v-model="createData.title"/>
             </UFormField>
             
             <UFormField label="Description">
-                <UInput v-model="createData.description"/>
+                <Input v-model="createData.description"/>
             </UFormField>
 
             <Button :label="'Создать'" @click="create"/>
@@ -20,6 +20,7 @@
 
 <script setup lang="ts">
 import Button from '~/components/shared/ui/button/index.vue';
+import Input from '~/components/shared/ui/input/index.vue';
 import { createCashbox } from '~/components/entities/cashbox/api/create';
 
 import type { CreateData } from '~/components/entities/cashbox/model/types';

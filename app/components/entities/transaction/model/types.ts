@@ -7,19 +7,20 @@ type TransactionTag = Partial<{
 
 type ExternalParams = {
     type: TransferType,
-    amount: string,
+    amount: number,
     description?: string,
     tag?: TransactionTag
 }
 
 type InternalParams = {
     to: number,
-    amount: string,
+    amount: number,
     description?: string,
     tag?: TransactionTag
 }
 
 export type {
+    TransactionTag,
     TransferType,
     ExternalParams,
     InternalParams

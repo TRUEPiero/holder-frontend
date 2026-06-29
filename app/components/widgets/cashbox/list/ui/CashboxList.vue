@@ -47,6 +47,8 @@ const props = defineProps<{
     projectId: number
 }>()
 
+const cashboxStore = useCashboxStore();
+
 const cashboxes = ref<Cashbox[]>([]);
 const loading = ref(false);
 const activeId = ref<number | null>(null);
@@ -62,6 +64,7 @@ const getCashboxes = async () => {
     if (!result) return;
 
     cashboxes.value = result.data;
+    cashboxStore.setCashboxes(cashboxes.value);
 
     loading.value = false;
 }
