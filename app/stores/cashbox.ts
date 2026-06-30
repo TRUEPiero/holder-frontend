@@ -1,19 +1,23 @@
-import { defineStore } from "pinia";
 import type { CashboxState, Cashbox } from "~/components/entities/cashbox/model/types";
 
 export const useCashboxStore = defineStore('cashbox', {
     state: ():CashboxState => ({
         cashboxes: [],
-        actived: null
+        needUpdate: [],
+        needReload: false
     }),
 
     actions: {
-        setCashboxes(data: any) {
+        setCashboxes(data: Cashbox[]) {
             this.cashboxes = data;
         },
+    
+        setNeedUpdate(data: number[]) {
+            this.needUpdate = data;
+        },
 
-        setActives(data: any) {
-            this.actived = data;
+        setNeedReload(value: boolean) {
+            this.needReload = value;
         }
     }
 })

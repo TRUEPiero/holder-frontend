@@ -1,4 +1,3 @@
-import { defineStore } from "pinia";
 import type { Project, ProjectState } from "~/components/entities/project/model/types";
 
 export const useProjectStore = defineStore('project', {

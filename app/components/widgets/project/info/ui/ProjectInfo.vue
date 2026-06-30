@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="w-[50%]"
+        class="ProjectInfo__main"
     >
         <Loader 
             v-if="loading"
@@ -44,3 +44,5 @@ onMounted(async () => {
     await getProject();
 })
 </script>
+
+<style src="~/assets/css/components/widgets/project/info.scss"></style>

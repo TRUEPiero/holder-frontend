@@ -1,0 +1,12 @@
+.CashboxSlider {
+    width: 100%;
+    max-width: 320px;
+    margin: auto;
+}
+
+.Transfer {
+    &__ActionBlock {
+        display: flex;
+        gap: 20px;
+    }
+}

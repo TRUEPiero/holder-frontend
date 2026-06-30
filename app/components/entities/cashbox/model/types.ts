@@ -5,9 +5,16 @@ type Cashbox = {
     balance: string
 }
 
+type ExternalCashbox = {
+    id: number
+    title: string
+}
+
 type CashboxState = {
     cashboxes: Cashbox[],
-    actived: Cashbox | null
+    needUpdate: number[],
+    needReload: boolean
+    // actived: Cashbox | null
 }
 
 type CreateData = {
@@ -15,8 +22,15 @@ type CreateData = {
     description?: string
 }
 
+type UpdateData = {
+    title?: string,
+    description?: string
+}
+
 export type {
     Cashbox,
+    ExternalCashbox,
     CashboxState,
-    CreateData
+    CreateData,
+    UpdateData
 }

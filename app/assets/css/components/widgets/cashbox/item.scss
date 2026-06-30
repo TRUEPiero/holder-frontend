@@ -3,11 +3,26 @@
     border-radius: calc(var(--ui-radius) * 2);
     // padding: 24px;
 
+    &__preview {
+        position: relative;
+        display: flex;
+    }
+
     &__card {
         background: none;
         box-shadow: none;
         padding: 24px;
         width: 100%;
+    }
+
+    &__actions {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        gap: 4px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
     &__detail {
@@ -20,5 +35,11 @@
     
     .CashboxCard__root {
         padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &:hover .CashboxItem__actions {
+        opacity: 1;
     }
 }

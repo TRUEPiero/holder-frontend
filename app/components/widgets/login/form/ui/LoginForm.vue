@@ -1,7 +1,7 @@
 <template>
     <UCard>
         <template #header>
-            <h2 class="text-center">{{ t('form.header.login') }}</h2>
+            <h2 class="text-center">{{ t('auth.form.header') }}</h2>
         </template>
         <AuthByEmailForm />
     </UCard>

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[50%]">
+    <div class="CashboxListMain">
         <UCard 
             class="CashboxList"
             variant="subtle"
@@ -19,12 +19,14 @@
                     v-if="loading"
                     class="h-[140px]"
                 />
+
+                <div v-if="!cashboxes.length" class="">Empty</div>
                 <CashboxItem
                     v-else
                     v-for="cashbox in cashboxes"
                     :key="cashbox.id"
                     :project-id="projectId"
-                    :cashbox="cashbox"
+                    :cashbox-id="cashbox.id"
                     :active-id="activeId"
                     @set-active="setActiveCashbox"
                 />
@@ -37,7 +39,7 @@
 import Loader from '~/components/shared/ui/loader/index.vue';
 
 import CashboxItem from '~/components/widgets/cashbox/item/ui/CashboxItem.vue';
-import CreateCashbox from '~/components/features/cashbox/ui/CreateCashbox.vue';
+import CreateCashbox from '~/components/features/cashbox-create/ui/CreateCashbox.vue';
 
 import { getByProject } from '~/components/entities/cashbox/api/getByProject';
 
@@ -52,6 +54,8 @@ const cashboxStore = useCashboxStore();
 const cashboxes = ref<Cashbox[]>([]);
 const loading = ref(false);
 const activeId = ref<number | null>(null);
+
+const needReload = computed(() => cashboxStore.needReload)
 
 const setActiveCashbox = (id: number) => {
     activeId.value = id;
@@ -68,6 +72,13 @@ const getCashboxes = async () => {
 
     loading.value = false;
 }
+
+watch(needReload, async (value) => {
+    if(!value) return;
+
+    await getCashboxes();
+    cashboxStore.setNeedReload(false);
+})
 
 onMounted(async () => {
     await getCashboxes();

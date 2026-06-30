@@ -1,7 +1,7 @@
 {
-    "form": {
-        "header": {
-            "login": "Authorisation"
+    "auth": {
+        "form": {
+            "header": "Authorisation"
         }
     }
 }

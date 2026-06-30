@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full h-[calc(100vh-72px)]">
+    <div class="ProjectDateail__main">
         <ProjectInfo :project-id="projectId" />
         <CashboxList :project-id="projectId" />
     </div>
@@ -13,3 +13,5 @@ const route = useRoute();
 
 const projectId = Number(route.params.id);
 </script>
+
+<style src="~/assets/css/components/widgets/project/detail.scss"></style>

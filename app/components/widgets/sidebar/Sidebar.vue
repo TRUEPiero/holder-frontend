@@ -12,7 +12,7 @@
         <template #header>
             <p>logo</p>
             <UButton 
-                class="closeIcon"
+                class="action closeIcon"
                 icon="i-lucide-chevron-left"
                 variant="soft"
                 @click="toggleSidebar"

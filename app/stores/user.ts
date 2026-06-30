@@ -1,4 +1,3 @@
-import { defineStore } from "pinia";
 import type { UserState } from "~/components/entities/user/model/types";
 
 export const useUserStore = defineStore('user', {
