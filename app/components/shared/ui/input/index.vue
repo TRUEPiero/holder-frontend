@@ -1,10 +1,9 @@
 <template>
-  <UInput/>
+  <UInput class="Input"
+    :ui="{base: 'Input__base'}"
+  />
 </template>
 
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
-<style>
-
-</style>
+<style src="~/assets/css/components/shared/input/index.scss"></style>

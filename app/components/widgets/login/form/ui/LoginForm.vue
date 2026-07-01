@@ -1,5 +1,8 @@
 <template>
-    <UCard>
+    <UCard 
+        class="AuthModal"
+        :ui="{header: 'AuthModal__header'}"    
+    >
         <template #header>
             <h2 class="text-center">{{ t('auth.form.header') }}</h2>
         </template>

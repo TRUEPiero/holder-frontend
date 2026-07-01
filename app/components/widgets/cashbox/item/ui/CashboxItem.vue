@@ -10,21 +10,23 @@
             <UCard
                 class="CashboxItem__card"
                 :ui="{body: 'CashboxCard__root'}"
-            >
-                <p>ID: {{ cashbox.id }}</p>
+            >               
+                <p v-if="!edit">{{ t('cashbox.item.title') }}: {{ cashbox.title }}</p>
+                <Input v-else v-model="editData.title" class="max-w-xs" @click.stop/>
                 
-                <p v-if="!edit">title: {{ cashbox.title }}</p>
-                <Input v-else v-model="cashbox.title" class="max-w-xs"/>
-                
-                <p v-if="!edit">description: {{ cashbox.description }}</p>
-                <Input v-else v-model="cashbox.description" class="max-w-xs"/>
+                <p v-if="!edit">{{ t('cashbox.item.description') }}: {{ cashbox.description }}</p>
+                <Input v-else v-model="editData.description" class="max-w-xs" @click.stop/>
 
-                <p>balance: {{ cashbox.balance }}</p>
+                <p>{{ t('cashbox.item.balance') }}: {{ cashbox.balance }}</p>
             </UCard>
 
             <!-- action block -->
             <div class="CashboxItem__actions">
-                <EditCashbox />
+                <EditCashbox :editing="edit" :changed="isChanged" :loading="loading"
+                    @start="startEdit"
+                    @cancel="stopEdit"
+                    @save="editCashbox"
+                />
                 
                 <DeleteCashbox 
                     :project-id="projectId"
@@ -49,7 +51,10 @@ import EditCashbox from '~/components/features/cashbox-edit/ui/EditCashbox.vue';
 import DeleteCashbox from '~/components/features/cashbox-delete/ui/DeleteCashbox.vue';
 import Transfer from '~/components/features/transaction-transfer/ui/TransferModal.vue';
 
+import { useEdit } from '../lib/edit';
+
 import { getById } from '~/components/entities/cashbox/api/getById';
+import { updateCashbox } from '~/components/entities/cashbox/api/update';
 
 import type { Cashbox } from '~/components/entities/cashbox/model/types';
 
@@ -61,10 +66,12 @@ const props = defineProps<{
 const emits = defineEmits(['setActive'])
 
 const cashboxStore = useCashboxStore();
+const { t } = useI18n();
 
 const loading = ref(false);
-const edit = ref(false);
 const cashbox = ref<Cashbox | undefined>();
+
+const { edit, editData, isChanged, startEdit, stopEdit } = useEdit(cashbox);
 
 const active = computed(() => props.activeId === props.cashboxId)
 const updatedIds = computed(() => cashboxStore.needUpdate)
@@ -81,6 +88,24 @@ const getDetailInfo = async () => {
     if(!res) return;
 
     cashbox.value = res.data;
+
+    loading.value = false;
+}
+
+const editCashbox = async () => {
+    if (!isChanged.value) {
+        stopEdit();
+        return
+    }
+
+    loading.value = true;
+
+    const res = await updateCashbox(props.projectId, props.cashboxId, editData);
+    if(!res) return;
+
+    stopEdit();
+
+    await getDetailInfo();
 
     loading.value = false;
 }

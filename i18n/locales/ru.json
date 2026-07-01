@@ -1,7 +1,74 @@
 {
     "auth": {
         "form": {
-            "header": "Авторизация"
+            "header": "Авторизация",
+            "login": "Логин",
+            "enter_login": "Введите email",
+            "password": "Пароль",
+            "enter_pass": "Введите пароль",
+            "remember_me": "Запомнить меня",
+            "forgot_pass": "Забыли пароль?",
+            "submit": "Войти",
+            "validation": {
+                "invalid_email": "Некорректный email",
+                "pass_required": "Обязательно поле",
+                "pass_min_char": "Пароль должен содержать минимум 8 символов"
+            }
+        }
+    },
+    "project": {
+        "table": {
+            "empty": "Нет проектов",
+            "field": {
+                "title": "Название",
+                "balance": "Баланс"
+            }
+        }
+    },
+    "cashbox": {
+        "list": {
+            "search_placeholder": "Search..."
+        },
+        "item": {
+            "title": "Название",
+            "description": "Описание",
+            "balance": "Баланс"
+        },
+        "create": {
+            "add": "Добавить",
+            "header": "Добавить счет",
+            "description": "",
+            "form": {
+                "title": "Название",
+                "description": "Описание",
+                "submit": "Создать",
+                "validation": {
+                    "title_required": "Обязательно поле"
+                }
+            }
+        },
+        "delete": {
+            "header": "Удалить счет",
+            "description": "",
+            "content": "Вы уверены что хотите удалить счет?",
+            "cancel": "Отмена",
+            "submit": "Удалить"
+        }
+    },
+    "transaction": {
+        "transfer": {
+            "header": "Перевод средств",
+            "description": "",
+            "form": {
+                "amount": "Сумма",
+                "description": "Описание",
+                "tag": "Тег",
+                "submit": "Отправить",
+                "external_cashbox": "Внешний счет/траты",
+                "validation": {
+                    "incorrect_amount": "Некорректное значение"
+                }
+            }
         }
     }
 }

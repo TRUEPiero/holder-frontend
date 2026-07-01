@@ -1,7 +1,7 @@
 <template>
     <Modal 
-        :title="'test'" 
-        :description="'описание'" 
+        :title="t('transaction.transfer.header')" 
+        :description="t('transaction.transfer.description')" 
         v-model="isOpen"
     >
         <template #actions>
@@ -33,14 +33,14 @@
                     <p>{{ item.title }}</p>
                 </UCarousel>
 
-                <UFormField label="Сумма" name="amount" required>
+                <UFormField :label="t('transaction.transfer.form.amount')" name="amount" required>
                     <AmountInput v-model="state.amount"/>
                 </UFormField>
-                <UFormField label="Description" name="description">
+                <UFormField :label="t('transaction.transfer.form.description')" name="description">
                     <Input v-model="state.description"/>
                 </UFormField>
 
-                <UFormField :label="'Tag'" name="tag"> 
+                <UFormField :label="t('transaction.transfer.form.tag')" name="tag"> 
                     <UInputMenu 
                         :items="tags"
                         v-model="tag"
@@ -51,7 +51,7 @@
                 </UFormField>
 
                 <div class="BaseModal__footer">
-                    <Button :disabled="loading" :label="'Отправить'" type="submit"/>
+                    <Button :disabled="loading" :label="t('transaction.transfer.form.submit')" type="submit"/>
                 </div>
             </UForm>
         </template>
@@ -78,6 +78,7 @@ const props = defineProps<{
 }>()
 
 const cashboxStore = useCashboxStore();
+const { t } = useI18n();
 
 const { transfer } = useTransfer();
 const { state, schema, resetForm } = useForm();

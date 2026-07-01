@@ -1,15 +1,15 @@
 <template>
-    <Modal v-model="isOpen">
+    <Modal v-model="isOpen" :title="t('cashbox.delete.header')" :description="t('cashbox.delete.description')">
         <template #actions>
             <Button class="action" icon="i-lucide-trash" variant="soft" @click.stop="openModal()"/>
         </template>
 
         <template #body>
-            u`re sure?
+            <p>{{ t('cashbox.delete.content') }}</p>
 
             <div class="BaseModal__footer">
-                <Button label="test" @click="closeModal()"/>
-                <Button label="test" @click="submit"/>
+                <Button variant="outline" :label="t('cashbox.delete.cancel')" @click="closeModal()"/>
+                <Button color="error" :label="t('cashbox.delete.submit')" @click="submit"/>
             </div>
         </template>
     </Modal>
@@ -29,6 +29,7 @@ const props = defineProps<{
 }>()
 
 const cashboxStore = useCashboxStore();
+const { t } = useI18n();
 
 const { isOpen, openModal, closeModal } = useModal();
 

@@ -1,5 +1,13 @@
 .DefaultLayout {
     display: flex;
     flex-direction: row;
+    background-color: var(--ui-color-neutral-950);
+}
 
+.ProjectContainer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 16px 16px 16px 0;
 }

@@ -1,22 +1,25 @@
 <template>
     <UForm
+        class="AuthForm"
         :state="state"
         :schema="schema"
         @submit="onSubmit"
     >
-        <UFormField label="Логин" name="login">
-            <Input v-model="state.login" type="text"/>
+        <UFormField class="AuthForm__field" :label="t('auth.form.login')" name="login">
+            <Input v-model="state.login" type="text" :placeholder="t('auth.form.enter_login')"/>
         </UFormField>
-        <UFormField label="Пароль" name="password">
-            <InputPassword v-model="state.password"/>
+        <UFormField class="AuthForm__field" :label="t('auth.form.password')" name="password">
+            <InputPassword v-model="state.password" :placeholder="t('auth.form.enter_pass')"/>
         </UFormField>
-        <div class="flex flex-row w-full">
-            <UFormField label="Запомнить меня" name="remember">
+        <div class="AuthForm__actions">
+            <UFormField class="forgotPass" :label="t('auth.form.remember_me')" name="remember" orientation="horizontal">
                 <UCheckbox v-model="state.remember"/>
             </UFormField>
-            <Button :label="'Забыли пароль'" :variant="'link'" @click="forgotPass"/>
+            <Button :label="t('auth.form.forgot_pass')" :variant="'link'" @click="forgotPass"/>
         </div>
-        <Button :label="'Войти'" :type="'submit'"/>
+        <div class="AuthForm__footer">
+            <Button :label="t('auth.form.submit')" :type="'submit'"/>
+        </div>
     </UForm>
 </template>
 
@@ -30,10 +33,11 @@
 
     const userStore = useUserStore();
     const router = useRouter();
+    const { t } = useI18n();
 
     const schema = z.object({
-        login: z.email('Invalid email'),
-        password: z.string('Password is required').min(8, 'Must be at least 8 characters')
+        login: z.email(t('auth.form.validation.invalid_email')),
+        password: z.string(t('auth.form.validation.pass_required')).min(8, t('auth.form.validation.pass_min_char'))
     })
 
     const loading = ref(false)
@@ -61,4 +65,6 @@
         router.push('/project/list')
     }
 </script>
+
+<style src="~/assets/css/components/feature/login/auth.scss"></style>
 

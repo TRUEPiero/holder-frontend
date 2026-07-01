@@ -1,0 +1,27 @@
+.AuthModal {
+    width: 400px;
+}
+
+.AuthForm {
+
+    &__field {
+        margin-top: 16px;
+    }
+
+    &__actions {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        margin-top: 16px;
+        .forgotPass {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__footer {
+        margin-top: 20px;
+    }
+}

@@ -1,5 +1,7 @@
 <template>
-    <UTable :data="data" :columns="columns"/>
+    <UTable class="ProjectTable" :data="data" :columns="columns" :empty="t('project.table.empty')"
+        :ui="{base: 'ProjectTable__base rounded-xl ring ring-default'}"
+    />
 </template>
 
 <script setup lang="ts">
@@ -9,17 +11,14 @@
     import type { Project } from '~/components/entities/project/model/types';
 
     const router = useRouter();
+    const { t } = useI18n();
 
     const columns: TableColumn<Project>[] = [
         {
-            accessorKey: 'id',
-            header: '#',
-        },
-        {
             accessorKey: 'title',
-            header: 'title',
+            header: t('project.table.field.title'),
             cell: ({ row }) => {
-                const id: number = row.getValue('id');
+                const id: number = row.original.id;
                 return h(
                     'button',
                     {
@@ -32,12 +31,18 @@
         },
         {
             accessorKey: 'balance',
-            header: 'balance'
+            header: t('project.table.field.balance')
         }
     ];
 
     const data = ref<Project[]>([]);
     const loading = ref(false);
+    
+    const open = (event: Event, id: number) => {
+        event.preventDefault();
+        
+        router.push(`/project/${id}`)
+    }
 
     const getTableData = async () => {
         loading.value = true;
@@ -49,13 +54,9 @@
         loading.value = false;
     }
 
-    const open = (event: Event, id: number) => {
-        event.preventDefault();
-        
-        router.push(`/project/${id}`)
-    }
-
     onMounted(async () => {
         await getTableData();
     })
 </script>
+
+<style src="~/assets/css/components/widgets/project/table.scss"></style>

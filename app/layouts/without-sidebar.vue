@@ -1,6 +1,6 @@
 <template>
     <UHeader/>
-    <UMain class="">
+    <UMain>
         <slot/>
     </UMain>
 </template>

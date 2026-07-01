@@ -1,7 +1,7 @@
 <template>
-    <UMain class="DefaultLayout bg-neutral-50 dark:bg-neutral-950">
+    <UMain class="DefaultLayout">
         <Sidebar />
-        <div class="ProjectContainer p-[20px] flex-1 flex flex-col m-4 ml-0 rounded-xl ring ring-default bg-default">
+        <div class="ProjectContainer rounded-xl ring ring-default bg-default">
             <slot />
         </div>
     </UMain>

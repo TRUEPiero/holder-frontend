@@ -13,7 +13,7 @@
             <p>logo</p>
             <UButton 
                 class="action closeIcon"
-                icon="i-lucide-chevron-left"
+                :icon="`i-lucide-chevron-${open ? 'left' : 'right'}`"
                 variant="soft"
                 @click="toggleSidebar"
             />

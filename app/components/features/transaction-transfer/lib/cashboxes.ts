@@ -2,12 +2,14 @@ import type { Cashbox, ExternalCashbox } from "~/components/entities/cashbox/mod
 import type { TransferType } from "~/components/entities/transaction/model/types";
 
 export function useCashboxes(cashboxes: Cashbox[], cashboxId: number) {
+    const { t } = useI18n();
+
     const fromId = ref<number>(0);
     const toId = ref<number>(0);
 
     const all = computed<(Cashbox | ExternalCashbox)[]>(() => {
         return [
-            { id: 0, title: 'Внешний счет/траты' },
+            { id: 0, title: t('transaction.transfer.form.external_cashbox') },
             ...cashboxes
         ]
     })

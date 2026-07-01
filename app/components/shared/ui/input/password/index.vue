@@ -1,5 +1,7 @@
 <template>
     <UInput
+        class="Input"
+        :ui="{base: 'Input__base'}"
         :type="!hidden ? 'text' : 'password'"
     >
         <template #trailing>
@@ -12,10 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-    const hidden = ref(true)
-
+const hidden = ref(true)
 </script>
 
-<style>
-
-</style>
+<style src="~/assets/css/components/shared/input/index.scss"></style>

@@ -11,7 +11,7 @@
             <div class="ActionBlock">
                 <CreateCashbox :project-id="props.projectId" @created="getCashboxes"/>
 
-                <UInput />
+                <UInput v-model="search" :placeholder="t('cashbox.list.search_placeholder')"/>
             </div>
 
             <div class="CashboxesBlock">
@@ -19,11 +19,10 @@
                     v-if="loading"
                     class="h-[140px]"
                 />
-
-                <div v-if="!cashboxes.length" class="">Empty</div>
+                
                 <CashboxItem
                     v-else
-                    v-for="cashbox in cashboxes"
+                    v-for="cashbox in filtteredCashboxes"
                     :key="cashbox.id"
                     :project-id="projectId"
                     :cashbox-id="cashbox.id"
@@ -50,12 +49,24 @@ const props = defineProps<{
 }>()
 
 const cashboxStore = useCashboxStore();
+const { t } = useI18n();
 
 const cashboxes = ref<Cashbox[]>([]);
 const loading = ref(false);
 const activeId = ref<number | null>(null);
+const search = ref('');
 
 const needReload = computed(() => cashboxStore.needReload)
+const filtteredCashboxes = computed(() => {
+    if(!search.value) return cashboxes.value;
+
+    return cashboxes.value.filter(cashbox => {
+        const title = cashbox.title.toLowerCase();
+        const searchValue = search.value.toLowerCase();
+
+        return title.includes(searchValue);
+    })
+})
 
 const setActiveCashbox = (id: number) => {
     activeId.value = id;
