@@ -1,7 +1,9 @@
 <template>
-    <UTable class="ProjectTable" :data="data" :columns="columns" :empty="t('project.table.empty')"
-        :ui="{base: 'ProjectTable__base rounded-xl ring ring-default'}"
-    />
+    <div class="ProjectTable__main">
+        <UTable class="ProjectTable" :data="data" :columns="columns" :empty="t('project.table.empty')"
+            :ui="{base: 'ProjectTable__base rounded-xl ring ring-default'}"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">

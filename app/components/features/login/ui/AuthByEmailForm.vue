@@ -19,6 +19,7 @@
         </div>
         <div class="AuthForm__footer">
             <Button :label="t('auth.form.submit')" :type="'submit'"/>
+            <Button :label="t('auth.form.to_register')" variant="link" @click="toRegister"/>
         </div>
     </UForm>
 </template>
@@ -47,6 +48,10 @@
         password: '',
         remember: false,
     })
+
+    const toRegister = () => {
+        router.push('/register')
+    }
 
     const forgotPass = () => {
 

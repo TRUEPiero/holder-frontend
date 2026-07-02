@@ -2,11 +2,18 @@
     --sidebar-width-icon: 6rem;
 
     &__header {
+        padding-left: 22px;
+        padding-right: 4px;
         justify-content: space-between;
     }
 
     .closeIcon {
         opacity: 0;
+        padding: 4px 0;
+    }
+
+    .UserBtn {
+        width: 100%;
     }
 
     &[data-state="collapsed"] {

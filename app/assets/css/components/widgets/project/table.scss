@@ -1,3 +1,7 @@
 .ProjectTable {
     padding: 48px;
+    
+    &__main {
+        height: calc(100vh - 72px);
+    }
 }
