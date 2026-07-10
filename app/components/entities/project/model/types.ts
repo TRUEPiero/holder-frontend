@@ -9,7 +9,12 @@ type ProjectState = {
     title: string | null
 }
 
+type createData = {
+    title: string
+}
+
 export type { 
     Project, 
-    ProjectState
+    ProjectState,
+    createData
 }

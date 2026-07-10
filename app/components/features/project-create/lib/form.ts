@@ -1,28 +1,25 @@
 import * as z from 'zod'
 
 export function useForm() {
-    const {t} = useI18n();
+    const { t } = useI18n();
 
     const schema = z.object({
-        title: z.string().nonempty(t('cashbox.create.form.validation.title_required')),
-        description: z.string()
+        title: z.string().nonempty(t('project.create.form.validation.title_required'))
     })
 
     type Schema = z.output<typeof schema>
 
     const state = reactive<Schema>({
-        title: '',
-        description: ''
+        title: ''
     })
 
     const resetForm = () => {
-        state.title = '',
-        state.description = ''
+        state.title = ''
     }
 
     return {
-        state,
         schema,
+        state,
         resetForm
     }
 }

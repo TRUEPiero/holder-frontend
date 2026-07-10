@@ -4,6 +4,13 @@ type UserState = {
     authorized: boolean,
 }
 
+type RegisterData = {
+    name: string
+    email: string
+    password: string
+    verify_code: string
+}
+
 type User = {
     id: number
     name: string
@@ -17,5 +24,6 @@ type User = {
 
 export type {
     UserState,
-    User
+    User,
+    RegisterData
 }

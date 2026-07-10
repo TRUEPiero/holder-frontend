@@ -3,7 +3,7 @@
         class="AuthForm"
         :state="state"
         :schema="schema"
-        @submit="onSubmit"
+        @submit="submit"
     >
         <UFormField class="AuthForm__field" :label="t('auth.form.login')" name="login">
             <Input v-model="state.login" type="text" :placeholder="t('auth.form.enter_login')"/>
@@ -25,39 +25,31 @@
 </template>
 
 <script lang="ts" setup>
-    import * as z from 'zod'
     import Button from '~/components/shared/ui/button/index.vue'
     import Input from '~/components/shared/ui/input/index.vue'
     import InputPassword from '~/components/shared/ui/input/password/index.vue'
+
     import { AuthByEmail } from '~/components/entities/user/api/Login';
-    import { useUserStore } from '~/stores';
+    import { useForm } from '../lib/form';
+import { authorize } from '~/components/entities/user/lib/authorize';
 
     const userStore = useUserStore();
     const router = useRouter();
     const { t } = useI18n();
 
-    const schema = z.object({
-        login: z.email(t('auth.form.validation.invalid_email')),
-        password: z.string(t('auth.form.validation.pass_required')).min(8, t('auth.form.validation.pass_min_char'))
-    })
+    const { schema, state } = useForm();
 
     const loading = ref(false)
 
-    const state = reactive({
-        login: '',
-        password: '',
-        remember: false,
-    })
-
     const toRegister = () => {
-        router.push('/register')
+        router.push('/register/verify')
     }
 
     const forgotPass = () => {
 
     }
 
-    const onSubmit = async () => {
+    const submit = async () => {
         loading.value = true;
         const res = await AuthByEmail(
             state.login,
@@ -65,7 +57,9 @@
         );
         if(!res) return
 
-        userStore.authorize(res.data);
+        const authorized = await authorize();
+        if(!authorized) return;
+        
         loading.value = false;
         router.push('/project/list')
     }

@@ -1,11 +1,12 @@
 <template>
-    <UCard 
+    <UCard
         class="RegisterModal"
-        :ui="{header: 'RegisterModal__header'}"    
-    >
+        :ui="{header: 'RegisterModal__header'}"
+    > 
         <template #header>
             <h2 class="text-center">{{ t('register.form.header') }}</h2>
         </template>
+
         <RegisterByEmail />
     </UCard>
 </template>
@@ -15,5 +16,3 @@ import RegisterByEmail from '~/components/features/register/ui/RegisterByEmail.v
 
 const { t } = useI18n();
 </script>
-
-<style src="~/assets/css/components/feature/login/register.scss"></style>

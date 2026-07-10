@@ -3,17 +3,49 @@
         "form": {
             "header": "Авторизация",
             "login": "Логин",
-            "enter_login": "Введите email",
+            "enter_login": "Введите адрес эл. почты",
             "password": "Пароль",
             "enter_pass": "Введите пароль",
             "remember_me": "Запомнить меня",
             "forgot_pass": "Забыли пароль?",
+            "to_register": "Регистрация",
             "submit": "Войти",
             "validation": {
                 "invalid_email": "Некорректный email",
                 "pass_required": "Обязательно поле",
                 "pass_min_char": "Пароль должен содержать минимум 8 символов"
             }
+        }
+    },
+    "register": {
+        "verify":{
+            "form": {
+                "header": "Подтверждение почты",
+                "email": "Адрес эл. почты",
+                "enter_email": "Введите email",
+                "verify_code": "Код подтверждения",
+                "enter_code": "Введите код подтверждения",
+                "submit": "Подтвердить",
+                "validation": {
+                    "invalid_email": "Некорректный email",
+                    "verify_code_required": "Обязательно поле"
+                }
+            }
+        },
+        "form": {
+            "header": "Регистрация",
+            "name":"Имя",
+            "email":"Адрес эл. почты",
+            "password":"Пароль",
+            "password_verify":"Подтверждение пароля",
+            "enter_name":"Введите имя",
+            "enter_email":"Введите адрес эл. почты",
+            "enter_password":"Введите пароль",
+            "enter_password_verify":"Подтвердите пароль",
+            "validation": {
+                "pass_min_char": "Пароль должен содержать минимум 8 символов"
+            },
+            "submit": "Отправить"
         }
     },
     "project": {
