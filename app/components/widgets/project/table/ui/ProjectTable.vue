@@ -8,30 +8,58 @@
             
         </div>
 
-        <UTable 
-            v-model:row-selection="rowSelection"
-            class="ProjectTable__root rounded-xl ring ring-default" 
-            :data="data" 
-            :columns="columns" 
-            :empty="t('project.table.empty')"
-        />
+        <div class="ProjectTable__base">
+            <UTable 
+                :data="data" 
+                :columns="columns" 
+                :empty="t('project.table.empty')"
+                class="ProjectTable__root rounded-xl ring ring-default" 
+            />
+        </div>
         
         <div class="ProjectTable__pagination">
-            <UPagination />
+            <UPagination
+                v-model:page="currentPage"
+                :total="pagination.totalPages * limit"
+                @update:page="getTableData"
+            />
         </div>
     </div>
+
+    <DeleteProject 
+        v-model="deleteModal.isOpen.value" 
+        :project-id="selected?.id" 
+        @close="deleteModal.closeModal"
+        @delete="deleteHandler"
+    />
+    <UpdateProject 
+        v-model="editModal.isOpen.value" 
+        :project="selected"
+        @close="editModal.closeModal"
+        @edit="editHandler"
+    />
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/shared/ui/button/index.vue'
 import CreateProject from '~/components/features/project-create/ui/CreateProject.vue';
+import DeleteProject from '~/components/features/project-delete/ui/DeleteProject.vue';
+import UpdateProject from '~/components/features/project-update/ui/UpdateProject.vue';
 
 import { getProjects } from '~/components/entities/project/api/getList';
 
-import type { TableColumn } from '@nuxt/ui';
+import type { DropdownMenuItem, TableColumn, TableRow } from '@nuxt/ui';
 import type { Project } from '~/components/entities/project/model/types';
+import { useModal } from '~/components/shared/lib/modal';
+import { usePagination } from '../lib/pagination';
 
-const router = useRouter();
 const { t } = useI18n();
+const router = useRouter();
+const editModal = useModal();
+const deleteModal = useModal();
+const { currentPage, limit, pagination } = usePagination();
+
+const UDropdownMenu = resolveComponent('UDropdownMenu');
 
 const columns: TableColumn<Project>[] = [
     {
@@ -43,7 +71,7 @@ const columns: TableColumn<Project>[] = [
                 'button',
                 {
                     class: 'text-left underline font-bold cursor-pointer',
-                    onClick: (e) => open(e, id)
+                    onClick: (e) => goToProject(id)
                 },
                 row.getValue('title')
             )
@@ -52,27 +80,85 @@ const columns: TableColumn<Project>[] = [
     {
         accessorKey: 'balance',
         header: t('project.table.field.balance')
+    },
+    {
+        accessorKey: 'actions',
+        header: '',
+        cell({row}) {
+            return h(
+                UDropdownMenu,
+                {
+                    items: getRowItems(row)
+                },
+                () => h(
+                    Button,
+                    {
+                        icon: 'i-lucide-ellipsis-vertical',
+                        color: 'neutral',
+                        variant: 'ghost',
+                    }
+                )
+            )
+        },
     }
 ];
 
-const data = ref<Project[]>([]);
 const loading = ref(false);
-const rowSelection = ref({});
+const data = ref<Project[]>([]);
+const selected = ref<Project>();
 
-const open = (event: Event, id: number) => {
-    event.preventDefault();
-    
+const goToProject = (id: number) => {
     router.push(`/project/${id}`)
+}
+
+const getRowItems = (row: TableRow<Project>): DropdownMenuItem[] => {
+    return [
+        {
+            label: t('project.table.actions.edit'),
+            onSelect() {
+                selected.value = row.original;
+                editModal.openModal();
+            }
+        },
+        {
+            label: t('project.table.actions.delete'),
+            onSelect() {
+                selected.value = row.original;
+                deleteModal.openModal();
+            }
+        }
+    ]
 }
 
 const getTableData = async () => {
     loading.value = true;
-    const result = await getProjects();
+
+    const result = await getProjects(currentPage.value, limit);
     if(!result) return;
 
-    data.value = result.data;
+    data.value = result.data.items;
+    pagination.value = result.data.pagination;
 
     loading.value = false;
+}
+
+const deleteHandler = async () => {
+    loading.value = true;
+
+    deleteModal.closeModal();
+
+    await getTableData();
+
+    loading.value = true;
+}
+const editHandler = async () => {
+    loading.value = true;
+
+    editModal.closeModal();
+
+    await getTableData();
+
+    loading.value = true;
 }
 
 onMounted(async () => {

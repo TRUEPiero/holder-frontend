@@ -11,7 +11,11 @@
             <div class="ActionBlock">
                 <CreateCashbox :project-id="props.projectId" @created="getCashboxes"/>
 
-                <UInput v-model="search" :placeholder="t('cashbox.list.search_placeholder')"/>
+                <Input 
+                    class="SearchInput"
+                    v-model="search"   
+                    :placeholder="t('cashbox.list.search_placeholder')"
+                />
             </div>
 
             <div class="CashboxesBlock">
@@ -20,21 +24,27 @@
                     class="h-[140px]"
                 />
                 
-                <CashboxItem
-                    v-else
-                    v-for="cashbox in filtteredCashboxes"
-                    :key="cashbox.id"
-                    :project-id="projectId"
-                    :cashbox-id="cashbox.id"
-                    :active-id="activeId"
-                    @set-active="setActiveCashbox"
-                />
+                <UTree
+                    v-model="test"
+                    :items="filtteredCashboxes"
+                    label-key="title"
+                    @update:model-value="setActiveCashbox"
+                    :ui="{root: 'CashboxesTree', item: 'CashboxesTree__item', link: 'CashboxesTree__link'}"
+                >
+                    <template #item="{item}">
+                        <CashboxItem
+                            :project-id="projectId"
+                            :cashbox-id="item.id"
+                        />
+                    </template>
+                </UTree>
             </div>
         </UCard>
     </div>
 </template>
 
 <script setup lang="ts">
+import Input from '~/components/shared/ui/input/index.vue';
 import Loader from '~/components/shared/ui/loader/index.vue';
 
 import CashboxItem from '~/components/widgets/cashbox/item/ui/CashboxItem.vue';
@@ -53,8 +63,9 @@ const { t } = useI18n();
 
 const cashboxes = ref<Cashbox[]>([]);
 const loading = ref(false);
-const activeId = ref<number | null>(null);
+const activeId = ref<number>();
 const search = ref('');
+const test = ref();
 
 const needReload = computed(() => cashboxStore.needReload)
 const filtteredCashboxes = computed(() => {
@@ -68,8 +79,8 @@ const filtteredCashboxes = computed(() => {
     })
 })
 
-const setActiveCashbox = (id: number) => {
-    activeId.value = id;
+const setActiveCashbox = (data: Cashbox) => {
+    cashboxStore.setActive(data);
 }
 
 const getCashboxes = async () => {

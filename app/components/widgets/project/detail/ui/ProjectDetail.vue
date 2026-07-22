@@ -1,5 +1,5 @@
 <template>
-    <div class="ProjectDateail__main">
+    <div class="ProjectDateail">
         <ProjectInfo :project-id="projectId" />
         <CashboxList :project-id="projectId" />
     </div>

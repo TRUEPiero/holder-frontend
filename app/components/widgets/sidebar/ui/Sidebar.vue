@@ -7,7 +7,11 @@
         :ui="{header: 'Sidebar__header'}">
 
         <template #header>
-            <h1>{{open ? 'Holder' : 'H'}}</h1>
+            <Button 
+                :label="open ? 'Holder' : 'H'" 
+                variant="link" 
+                @click="goToList"
+            />
             <Button 
                 class="action closeIcon"
                 :icon="`i-lucide-chevron-${open ? 'left' : 'right'}`"
@@ -17,9 +21,13 @@
             />
         </template>
 
+        <template #content>
+
+        </template>
+
         <template #footer>
             <UDropdownMenu
-                :items="items"
+                :items="footerDropdownItems"
                 :content="{
                     side: 'top',
                     align: 'center'
@@ -55,16 +63,25 @@ const userStore = useUserStore();
 const {open, toggleSidebar} = useToggle();
 
 const loading = ref(false);
-const items = ref<DropdownMenuItem[][]>([
+const footerDropdownItems = ref<DropdownMenuItem[][]>([
     [
         {
-            label: t('logout'),
+            icon: 'i-lucide-settings',
+            label: t('sidebar.settings'),
+            onSelect: () => goToUserSettings()
+        },
+        {
+            icon: 'i-lucide-log-out',
+            label: t('sidebar.logout'),
             onSelect: () => logout()
         }
     ]
 ])
 
 const user = computed(() => userStore.user)
+
+const goToList = () => router.push('/project/list');
+const goToUserSettings = () => router.push('/user/settings');
 
 const logout = async () => {
     loading.value = true;

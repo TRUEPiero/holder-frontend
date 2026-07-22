@@ -1,7 +1,7 @@
 import type { Cashbox, ExternalCashbox } from "~/components/entities/cashbox/model/types";
 import type { TransferType } from "~/components/entities/transaction/model/types";
 
-export function useCashboxes(cashboxes: Cashbox[], cashboxId: number) {
+export function useCashboxes(cashboxes: Cashbox[]) {
     const { t } = useI18n();
 
     const fromId = ref<number>(0);
@@ -20,7 +20,7 @@ export function useCashboxes(cashboxes: Cashbox[], cashboxId: number) {
     const toItems = computed(() => all.value.filter((i) => i.id !== fromId.value))
     const toIndex = computed(() => toItems.value.findIndex(i => i.id === toId.value))
 
-    const setActiveIds = (mode: TransferType) => {
+    const setActiveIds = (mode: TransferType, cashboxId: number) => {
         fromId.value = mode === 'expense' ? cashboxId : 0;
         toId.value = mode === 'income' ? cashboxId : 0;
     }

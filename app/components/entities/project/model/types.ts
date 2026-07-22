@@ -13,8 +13,13 @@ type createData = {
     title: string
 }
 
+type updateData = {
+    title: string
+}
+
 export type { 
     Project, 
     ProjectState,
-    createData
+    createData,
+    updateData
 }

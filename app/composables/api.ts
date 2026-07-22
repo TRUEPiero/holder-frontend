@@ -40,7 +40,6 @@ export const api = treaty<App>(`localhost:3000`, {
         const success = await refreshToken()
 
         if (!success) {
-            router.push('/login')
             return response;
         }
 

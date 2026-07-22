@@ -11,6 +11,7 @@ type ExternalCashbox = {
 }
 
 type CashboxState = {
+    active: Cashbox | null
     cashboxes: Cashbox[],
     needUpdate: number[],
     needReload: boolean
