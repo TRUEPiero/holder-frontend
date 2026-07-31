@@ -1,29 +1,36 @@
 <template>
     <div class="ProjectTable">
-        
-        <!-- action component -->
-        <div class="ActionBlock">
-            <CreateProject @created="getTableData"/>
-
+        <div class="ProjectTable__main">
             
-        </div>
+            <!-- action component -->
+            <div class="ActionBlock">
+                <CreateProject @created="getTableData"/>
 
-        <div class="ProjectTable__base">
-            <UTable 
-                :data="data" 
-                :columns="columns" 
-                :empty="t('project.table.empty')"
-                class="ProjectTable__root rounded-xl ring ring-default" 
-            />
+                
+            </div>
+
+            <div class="ProjectTable__base">
+                <UTable 
+                    :data="data" 
+                    :columns="columns" 
+                    :empty="t('project.table.empty')"
+                    class="ProjectTable__root rounded-xl ring ring-default" 
+                />
+            </div>
+            
+            <div class="ProjectTable__pagination">
+                <UPagination
+                    v-model:page="currentPage"
+                    :total="pagination.totalPages * limit"
+                    @update:page="getTableData"
+                />
+            </div>
+                
         </div>
-        
-        <div class="ProjectTable__pagination">
-            <UPagination
-                v-model:page="currentPage"
-                :total="pagination.totalPages * limit"
-                @update:page="getTableData"
-            />
-        </div>
+        <ProjectSettings v-if="settingModal.isOpen && projectId" :project-id="projectId" @close="() => {
+            settingModal.closeModal()
+            projectId = 0
+        }"/>
     </div>
 
     <DeleteProject 
@@ -45,6 +52,7 @@ import Button from '~/components/shared/ui/button/index.vue'
 import CreateProject from '~/components/features/project-create/ui/CreateProject.vue';
 import DeleteProject from '~/components/features/project-delete/ui/DeleteProject.vue';
 import UpdateProject from '~/components/features/project-update/ui/UpdateProject.vue';
+import ProjectSettings from '~/components/widgets/project/setting-groups/ui/ProjectSettingGroups.vue';
 
 import { getProjects } from '~/components/entities/project/api/getList';
 
@@ -57,7 +65,10 @@ const { t } = useI18n();
 const router = useRouter();
 const editModal = useModal();
 const deleteModal = useModal();
+const settingModal = useModal();
 const { currentPage, limit, pagination } = usePagination();
+
+const projectId = ref<number>();
 
 const UDropdownMenu = resolveComponent('UDropdownMenu');
 
@@ -79,7 +90,8 @@ const columns: TableColumn<Project>[] = [
     },
     {
         accessorKey: 'balance',
-        header: t('project.table.field.balance')
+        header: t('project.table.field.balance'),
+        cell: ({ row }) => formatCurrency(Number(row.original.balance))
     },
     {
         accessorKey: 'actions',
@@ -114,6 +126,13 @@ const goToProject = (id: number) => {
 const getRowItems = (row: TableRow<Project>): DropdownMenuItem[] => {
     return [
         {
+            label: t('project.table.actions.settings'),
+            onSelect() {
+                settingModal.openModal()
+                projectId.value = row.original.id
+            }
+        },
+        {
             label: t('project.table.actions.edit'),
             onSelect() {
                 selected.value = row.original;
@@ -126,7 +145,7 @@ const getRowItems = (row: TableRow<Project>): DropdownMenuItem[] => {
                 selected.value = row.original;
                 deleteModal.openModal();
             }
-        }
+        },
     ]
 }
 

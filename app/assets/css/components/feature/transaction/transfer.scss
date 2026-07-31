@@ -1,7 +1,7 @@
 .Transfer {
     &__ActionBlock {
-        display: flex;
-        gap: 20px;
+        display: inline-flex;
+        margin-top: 10px;
 
         .action {
             display: flex;

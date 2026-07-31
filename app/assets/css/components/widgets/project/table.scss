@@ -1,12 +1,21 @@
 .ProjectTable {
-    height: calc(100vh - 72px);
-    padding: 40px 48px;
     display: flex;
-    flex-direction: column;
     gap: 20px;
+    
+    &__main {
+        width: 100%;
+        height: calc(100vh - 72px);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
     &__base {
         height: 100%;
+    }
+
+    &__root {
+        width: 100%;
     }
 }
 

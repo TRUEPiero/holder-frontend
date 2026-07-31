@@ -1,0 +1,35 @@
+.ProjectSettings {
+    width: 100%;
+    height: 100%;
+
+    &__main {
+        height: 100%;
+    }
+
+    .ActionBlock {
+        display: flex;
+        justify-content: end;
+    }
+}
+
+.SettingGroups {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.SettingGroup {
+    &__header {
+        font-size: 20px;
+    }
+}
+
+.SettingCard {
+    height: 100%;
+
+    &__body {
+        height: 100%;
+    }
+
+}

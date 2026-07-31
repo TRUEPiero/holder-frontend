@@ -21,6 +21,7 @@
                 />
                 
                 <CashboxField v-model="editData"
+                    :value="formatCurrency(Number(cashbox.balance))"
                     :is-editable="false"
                     :cashbox="cashbox"
                     name="balance"

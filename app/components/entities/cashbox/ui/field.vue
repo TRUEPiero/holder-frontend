@@ -2,7 +2,7 @@
     <div class="CashboxField">
         <p v-if="!isEditable || !edit" class="CashboxField__label">
             {{ t(`cashbox.item.${name}`) }}: 
-            <span class="CashboxField__value">{{ cashbox[name] }}</span>
+            <span class="CashboxField__value">{{ value ? value : cashbox[name] }}</span>
         </p>
 
         <UFormField v-else-if="isEditable && edit" class="CashboxField__label" :label="`${t(`cashbox.item.${name}`)}:`" :name="name" >
@@ -22,6 +22,7 @@ const data = defineModel<any>();
 const props = defineProps<{
     isEditable: boolean,
     edit?: boolean,
+    value?: any,
 
     cashbox: Cashbox,
     name: 'title' | 'description' | 'balance'

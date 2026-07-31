@@ -5,6 +5,7 @@
         v-model="isOpen"
     >
         <template #actions>
+            <!-- <p class="Transfer__header">{{ t('transaction.operations.header') }}</p> -->
             <UCard class="Transfer__ActionBlock"
                 :ui="{body: 'TransferAction__body'}"
             >
