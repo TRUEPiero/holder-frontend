@@ -1,0 +1,5 @@
+.GroupSetting {
+    & .field + .field {
+        margin-top: 10px;
+    }
+}

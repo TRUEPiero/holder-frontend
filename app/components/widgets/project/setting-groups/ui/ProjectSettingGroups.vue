@@ -21,7 +21,7 @@
                     <div class="ActionBlock">
                         <Button label="Закрыть" variant="subtle" @click="emits('close')"/>
 
-                        <Button disabled label="Сохранить"/>
+                        <Button label="Сохранить"/>
                     </div>
                 </div>
             </div>

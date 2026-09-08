@@ -18,8 +18,6 @@
             :disabled="setting.isDisabled"
         />
 
-        v-else-if="setting.type === 'boolean'"
-
     </UFormField>
 
 </template>
@@ -31,3 +29,5 @@ import type { Setting } from '../model/type';
         setting: Setting
     }>()
 </script>
+
+<style src="~/assets/css/components/entities/setting/index.scss"></style>

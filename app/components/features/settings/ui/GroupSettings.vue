@@ -1,8 +1,7 @@
 <template>
-    <div class="GroupSetting"
-        v-for="setting in settings"
-    >
+    <div class="GroupSetting">
         <ProjectSetting 
+            v-for="setting in settings"
             :setting="setting"
         />
     </div>
