@@ -1,8 +1,11 @@
 <template>
+    <RegisterForm/>
 </template>
 
 <script lang="ts" setup>
-    definePageMeta({
-        layout: 'autorisation'
-    })
+import RegisterForm from '~/components/widgets/register/form/ui/RegisterForm.vue';
+
+definePageMeta({
+    layout: 'autorisation'
+})
 </script>

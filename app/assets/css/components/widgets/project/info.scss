@@ -1,5 +1,13 @@
 .ProjectInfo {
-    &__main {
-        width: 50%;
+    width: 50%;
+
+    &__header {
+        font-size: 22px;
     }
+}
+
+.CashboxInfo{
+    &__main{
+        margin-top: 20px;
+    } 
 }

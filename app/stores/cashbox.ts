@@ -2,12 +2,16 @@ import type { CashboxState, Cashbox } from "~/components/entities/cashbox/model/
 
 export const useCashboxStore = defineStore('cashbox', {
     state: ():CashboxState => ({
+        active: null,
         cashboxes: [],
         needUpdate: [],
         needReload: false
     }),
 
     actions: {
+        setActive(data: Cashbox) {
+            this.active = data;
+        },
         setCashboxes(data: Cashbox[]) {
             this.cashboxes = data;
         },

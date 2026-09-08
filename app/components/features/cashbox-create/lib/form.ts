@@ -1,9 +1,10 @@
 import * as z from 'zod'
 
 export function useForm() {
+    const {t} = useI18n();
 
     const schema = z.object({
-        title: z.string().nonempty('Обязательное поле'),
+        title: z.string().nonempty(t('cashbox.create.form.validation.title_required')),
         description: z.string()
     })
 
@@ -16,7 +17,7 @@ export function useForm() {
 
     const resetForm = () => {
         state.title = '',
-            state.description = ''
+        state.description = ''
     }
 
     return {

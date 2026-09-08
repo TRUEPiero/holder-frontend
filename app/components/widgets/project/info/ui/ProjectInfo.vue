@@ -1,19 +1,29 @@
 <template>
-    <div 
-        class="ProjectInfo__main"
-    >
-        <Loader 
-            v-if="loading"
-            class="w-[250px]"
-        />
-        <p v-else>
-            {{ projectData?.title }}
-        </p>
+    <div class="ProjectInfo">
+        <Loader v-if="loading" class="w-[250px]"/>
+
+        <div v-else>
+            <p class="ProjectInfo__header">{{ projectData?.title }}</p>
+            <div v-if="cashbox" class="CashboxInfo__main" >
+                <Transfer
+                    :project-id="projectId"
+                    :cashbox-id="cashbox.id"
+                />
+
+                <TransactionHistory />
+            </div>
+            <div v-else class="ProjectInfo__main">
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import Loader from '~/components/shared/ui/loader/index.vue';
+
+import Transfer from '~/components/features/transaction-transfer/ui/TransferModal.vue';
+import TransactionHistory from '~/components/features/transaction-history/ui/TransactionHistory.vue';
+
 import { getById } from '~/components/entities/project/api/getById';
 import { useProjectStore } from '~/stores';
 
@@ -24,9 +34,12 @@ const props = defineProps<{
 }>()
 
 const projectStore = useProjectStore();
+const cashboxStore = useCashboxStore();
 
-const projectData: Ref<Project | null> = ref(null);
+const projectData = ref<Project>();
 const loading = ref(false);
+
+const cashbox = computed(() => cashboxStore.active)
 
 const getProject = async () => {
     loading.value = true

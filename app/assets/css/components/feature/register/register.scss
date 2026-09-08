@@ -1,0 +1,16 @@
+.RegisterModal {
+    width: 400px;
+}
+
+.RegisterForm {
+
+    &__field {
+        margin-top: 16px;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: end;
+        margin-top: 20px;
+    }
+}

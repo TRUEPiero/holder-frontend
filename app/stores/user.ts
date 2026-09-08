@@ -17,12 +17,25 @@ export const useUserStore = defineStore('user', {
             this.authorized = true
         },
 
+        unauthorize() {
+            this.setRole(null)
+            this.setUser(null)
+            this.authorized = false
+        },
+
         setRole(role: any) {
             this.role = role
         },
 
         setUser(user: any) {
             this.user = user
+        },
+
+        initials() {
+            const parts = this.user?.name.split(' ') || [];
+            if(!parts.length) return ``;
+
+            return `${parts[0]?.[0] || ''}${parts[1]?.[0] || ''}`.toUpperCase()
         }
     }
 

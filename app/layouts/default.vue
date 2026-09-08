@@ -1,14 +1,14 @@
 <template>
-    <UMain class="DefaultLayout bg-neutral-50 dark:bg-neutral-950">
+    <UMain class="DefaultLayout">
         <Sidebar />
-        <div class="ProjectContainer p-[20px] flex-1 flex flex-col m-4 ml-0 rounded-xl ring ring-default bg-default">
+        <div class="ProjectContainer rounded-xl ring ring-default bg-default">
             <slot />
         </div>
     </UMain>
 </template>
 
 <script setup lang="ts">
-import Sidebar from '~/components/widgets/sidebar/Sidebar.vue';
+import Sidebar from '~/components/widgets/sidebar/ui/Sidebar.vue';
 </script>
 
 <style src="~/assets/css/layouts/default.scss"></style>

@@ -1,7 +1,6 @@
 .ProjectDateail {
-    &__main {
-        display: flex;
-        width: 100%;
-        height: calc(100vh - 72px);
-    }
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 72px);
+    gap: 20px;
 }

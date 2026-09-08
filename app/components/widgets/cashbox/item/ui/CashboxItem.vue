@@ -1,30 +1,40 @@
 <template>
-    <UCollapsible
-        v-if="cashbox"
-        class="CashboxItem"
-        :ui="{content: 'CashboxItem__detail'}"
-        v-model:open="active"
-        @update:open="openCashbox"
-    >
-        <div class="CashboxItem__preview">
+        <div class="CashboxItem"
+             v-if="cashbox"    
+        >
             <UCard
                 class="CashboxItem__card"
                 :ui="{body: 'CashboxCard__root'}"
-            >
-                <p>ID: {{ cashbox.id }}</p>
-                
-                <p v-if="!edit">title: {{ cashbox.title }}</p>
-                <Input v-else v-model="cashbox.title" class="max-w-xs"/>
-                
-                <p v-if="!edit">description: {{ cashbox.description }}</p>
-                <Input v-else v-model="cashbox.description" class="max-w-xs"/>
+            >               
+                <CashboxField v-model="editData"
+                    :edit="edit"
+                    :is-editable="true"
+                    :cashbox="cashbox"
+                    name="title"
+                />
 
-                <p>balance: {{ cashbox.balance }}</p>
+                <CashboxField v-model="editData"
+                    :edit="edit"
+                    :is-editable="true"
+                    :cashbox="cashbox"
+                    name="description"
+                />
+                
+                <CashboxField v-model="editData"
+                    :value="formatCurrency(Number(cashbox.balance))"
+                    :is-editable="false"
+                    :cashbox="cashbox"
+                    name="balance"
+                />
             </UCard>
 
             <!-- action block -->
             <div class="CashboxItem__actions">
-                <EditCashbox />
+                <EditCashbox :editing="edit" :changed="isChanged" :loading="loading"
+                    @start="startEdit"
+                    @cancel="stopEdit"
+                    @save="editCashbox"
+                />
                 
                 <DeleteCashbox 
                     :project-id="projectId"
@@ -32,47 +42,35 @@
                 />
             </div>
         </div>
-
-        <template #content>
-            <Transfer 
-                :project-id="projectId"
-                :cashbox-id="cashboxId"
-            />
-        </template>
-    </UCollapsible>
 </template>
 
 <script setup lang="ts">
-import Input from '~/components/shared/ui/input/index.vue';
+import CashboxField from '~/components/entities/cashbox/ui/field.vue';
 
 import EditCashbox from '~/components/features/cashbox-edit/ui/EditCashbox.vue';
 import DeleteCashbox from '~/components/features/cashbox-delete/ui/DeleteCashbox.vue';
-import Transfer from '~/components/features/transaction-transfer/ui/TransferModal.vue';
+
+import { useEdit } from '../lib/edit';
 
 import { getById } from '~/components/entities/cashbox/api/getById';
+import { updateCashbox } from '~/components/entities/cashbox/api/update';
 
 import type { Cashbox } from '~/components/entities/cashbox/model/types';
 
 const props = defineProps<{
     projectId: number
     cashboxId: number
-    activeId: number | null
 }>()
 const emits = defineEmits(['setActive'])
 
 const cashboxStore = useCashboxStore();
 
 const loading = ref(false);
-const edit = ref(false);
 const cashbox = ref<Cashbox | undefined>();
 
-const active = computed(() => props.activeId === props.cashboxId)
-const updatedIds = computed(() => cashboxStore.needUpdate)
+const { edit, editData, isChanged, startEdit, stopEdit } = useEdit(cashbox);
 
-const openCashbox = (value: boolean) => {
-    const actived = value ? props.cashboxId : null;
-    emits('setActive', actived);
-}
+const updatedIds = computed(() => cashboxStore.needUpdate)
 
 const getDetailInfo = async () => {
     loading.value = true;
@@ -85,10 +83,30 @@ const getDetailInfo = async () => {
     loading.value = false;
 }
 
+const editCashbox = async () => {
+    if (!isChanged.value) {
+        stopEdit();
+        return
+    }
+
+    loading.value = true;
+
+    const res = await updateCashbox(props.projectId, props.cashboxId, editData);
+    if(!res) return;
+
+    stopEdit();
+
+    await getDetailInfo();
+
+    loading.value = false;
+}
+
 watch(updatedIds, async (value) => {
     if(value.includes(props.cashboxId)) {
         await getDetailInfo();
-        cashboxStore.setNeedUpdate([]);
+        const filtered = value.filter(id => id !== props.cashboxId);
+
+        cashboxStore.setNeedUpdate(filtered);
     }
 })
 
